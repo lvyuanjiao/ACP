@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="acp.js"></script>
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="acp.css" />
+	<meta charset="utf-8" />
+	<title>ACP demo</title>
+</head>
+<body>
+	<script id="panel" type="text/html">
+		<div><h2>Load...</h2><p>test</p></div>
+	</script>
+	<div id="wrapper">
+		<button id="alert">alert</button>
+		<button id="confirm">confirm</button>
+		<button id="prompt">prompt</button>
+		<button id="load">load</button>
+		<div id="block" style="min-height:20em;background-color:#F7F7F7;padding:1em;"></div>
+		<button id="block-alert">block</button>
+	</div>
+	<script type="text/javascript">				
+		
+		var acp = new acp();
+		document.getElementById('alert').onclick = function(){
+
+			acp.alert('Alert', 'Demo test test', function(){
+
+			});
+			
+		};
+		
+		document.getElementById('confirm').onclick = function(){
+
+			acp.confirm('Confirm', 'Demo test test', function(r) {
+				acp.alert('Alert', 'click : ' + (r ? 'ok' : 'cancel'), function(){
+
+				});
+			});
+			
+		};
+		
+		document.getElementById('prompt').onclick = function(){
+
+			acp.prompt('Prompt', 'Demo test test', 'prompt', function(txt) {
+				
+				if(txt) {
+					acp.waiting(function(close) {
+						setTimeout(function(){
+							acp.alert('Alert', 'input : ' + txt, function(){
+
+							});
+												
+						}, 2000);
+					});
+				}
+				
+			});
+			
+		};
+		
+		document.getElementById('load').onclick = function(){
+
+			acp.load('#panel', function(panel, close) {
+
+				setTimeout(function(){
+					close();
+				}, 2000);
+							
+			});
+		};
+		
+		/* block element */
+		var block = new acp(document.getElementById('block'));
+		
+		document.getElementById('block-alert').onclick = function(){
+
+			block.alert('Alert', 'Demo test test', function(){
+
+			});
+			
+		};
+		
+	</script>
+</body>
+</html>
