@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script type="text/javascript" src="acp.js"></script>
+	<script type="text/javascript" src="ACP.js"></script>
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="acp.css" />
+	<link rel="stylesheet" href="ACP.css" />
 	<meta charset="utf-8" />
 	<title>ACP demo</title>
 </head>
@@ -21,7 +21,7 @@
 	</div>
 	<script type="text/javascript">				
 		
-		var acp = new acp();
+		var acp = new ACP();
 		document.getElementById('alert').onclick = function(){
 
 			acp.alert('Alert', 'Demo test test', function(){
@@ -71,7 +71,7 @@
 		};
 		
 		/* block element */
-		var block = new acp(document.getElementById('block'));
+		var block = new ACP(document.getElementById('block'));
 		
 		document.getElementById('block-alert').onclick = function(){
 

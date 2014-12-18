@@ -1,4 +1,4 @@
-function acp(container) {
+function ACP(container) {
 	opts = {
 		top: '10%'
 	};
@@ -19,7 +19,7 @@ function acp(container) {
 	this.panel = tmp[1];
 };
 
-acp.prototype.resize = function() {
+ACP.prototype.resize = function() {
 	var pd = getEleWidth(this.container);
 	var width = this.panel.offsetWidth;
     var left = (pd / 2 - (width / 2)) + 0;
@@ -30,43 +30,47 @@ acp.prototype.resize = function() {
     this.panel.style.left = left + 'px';
 };
 
-acp.prototype.bindResize = function () {
+ACP.prototype.bindResize = function() {
 	var self = this;
 	function resize(){
 		self.resize();
 	};
 	if (window.attachEvent) {
-		window.attachEvent("resize", resize);
+		window.attachEvent("onresize", resize);
 	} else if (window.addEventListener) {
 		window.addEventListener("resize", resize, false);
 	}
 };
 
-acp.prototype.unbindResize = function () {
+ACP.prototype.unbindResize = function() {
+	var self = this;
+	function resize(){
+		self.resize();
+	};
 	if (window.detachEvent) {
-		window.detachEvent("resize", this.resize);
+		window.detachEvent("onresize", resize);
 	} else if (window.removeEventListener) {
-		window.removeEventListener("resize", this.resize, false);
+		window.removeEventListener("resize", resize, false);
 	}
 };
 	
-acp.prototype.show = function(html, done) {
+ACP.prototype.show = function(html, done) {
 	this.panel.innerHTML = html;
 	this.bindResize();
-	this.resize();	
+	this.resize();
 	addClass(this.overlay, opts.OSC);
 	addClass(this.panel, opts.PSC);
 	done(this.panel);
 };
 	
-acp.prototype.hide = function () {
+ACP.prototype.hide = function () {
 	this.unbindResize();
 	removeClass(this.panel, opts.PSC);
 	removeClass(this.overlay, opts.OSC);
 };
 
 
-acp.prototype.alert = function(title, msg, callback) {
+ACP.prototype.alert = function(title, msg, callback) {
 	var self = this;
 	self.show(nano(opts.alert, {'icon': 'fa fa-info-circle fa-2x', 'title': title, 'content': msg, 'ok':'OK'}), function(panel) {			
 		var btn = panel.getElementsByTagName('button')[0];
@@ -78,7 +82,7 @@ acp.prototype.alert = function(title, msg, callback) {
 	});
 };
 	
-acp.prototype.confirm = function(title, msg, callback) {
+ACP.prototype.confirm = function(title, msg, callback) {
 	var self = this;
 	function action(res) {
 		self.hide();
@@ -96,7 +100,7 @@ acp.prototype.confirm = function(title, msg, callback) {
 	});
 };
 	
-acp.prototype.prompt = function(title, msg, value, callback) {
+ACP.prototype.prompt = function(title, msg, value, callback) {
 	var self = this;
 	if(typeof value == 'function') {
 		callback = value;
@@ -125,7 +129,7 @@ acp.prototype.prompt = function(title, msg, value, callback) {
 	});
 };
 	
-acp.prototype.waiting = function(msg, callback, cancel) {
+ACP.prototype.waiting = function(msg, callback, cancel) {
 	var self = this;
 	if(typeof msg == 'function') {
 		callback = msg;
@@ -144,7 +148,7 @@ acp.prototype.waiting = function(msg, callback, cancel) {
 	});
 };
 	
-acp.prototype.load = function(elementId, closeIcon, callback) {
+ACP.prototype.load = function(elementId, closeIcon, callback) {
 
 	if(typeof closeIcon === 'function') {
 		callback = closeIcon;
@@ -155,8 +159,7 @@ acp.prototype.load = function(elementId, closeIcon, callback) {
 	var elementId = elementId && (elementId[0] === '#') && elementId.substring(1);
 	var panel = elementId && document.getElementById(elementId);
 	if(!panel) {
-		alert('Could not found element');
-		return;
+		return alert('Could not found element');
 	}
 	self.show(nano(opts.load, {'content': panel.innerHTML}), function(_panel) {
 	
