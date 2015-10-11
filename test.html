@@ -8,40 +8,34 @@
 	<title>ACP demo</title>
 </head>
 <body>
-	<script id="panel" type="text/html">
-		<div><h2>Load...</h2><p>test</p></div>
-	</script>
 	<div id="wrapper">
-		<button id="alert">alert</button>
-		<button id="confirm">confirm</button>
-		<button id="prompt">prompt</button>
-		<button id="load">load</button>
-		<div id="block" style="min-height:20em;background-color:#F7F7F7;padding:1em;"></div>
-		<button id="block-alert">block</button>
+		<button id="alert">Alert</button>
+		<button id="confirm">Confirm</button>
+		<button id="prompt">Prompt</button>
+		<button id="load">Load</button>
+	</div>
+	<br/>
+	<div id="block" style="min-height:20em;background-color:#F7F7F7;padding:1em;">
+		<button id="block-alert">Block me</button>
 	</div>
 	<script type="text/javascript">				
 		
 		var acp = new ACP();
 		document.getElementById('alert').onclick = function(){
-
 			acp.alert('Alert', 'Demo test test', function(){
 
 			});
-			
 		};
 		
 		document.getElementById('confirm').onclick = function(){
-
 			acp.confirm('Confirm', 'Demo test test', function(r) {
 				acp.alert('Alert', 'click : ' + (r ? 'ok' : 'cancel'), function(){
 
 				});
 			});
-			
 		};
 		
 		document.getElementById('prompt').onclick = function(){
-
 			acp.prompt('Prompt', 'Demo test test', 'prompt', function(txt) {
 				
 				if(txt) {
@@ -56,29 +50,21 @@
 				}
 				
 			});
-			
 		};
 		
 		document.getElementById('load').onclick = function(){
-
-			acp.load('#panel', function(panel, close) {
-
+			acp.load('<div><h2>Load...</h2><p>test</p></div>', function(panel, close) {
 				setTimeout(function(){
 					close();
 				}, 2000);
-							
 			});
 		};
 		
 		/* block element */
-		var block = new ACP(document.getElementById('block'));
-		
+		var block = new ACP('block');		
 		document.getElementById('block-alert').onclick = function(){
-
 			block.alert('Alert', 'Demo test test', function(){
-
 			});
-			
 		};
 		
 	</script>
